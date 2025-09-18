@@ -28,18 +28,21 @@ RUN corepack install
 
 RUN pnpm install --frozen-lockfile
 
+RUN ls -a
+
 # build resources
-FROM base AS builder
-WORKDIR /app/web
-COPY --from=packages /app/web/ .
+#FROM base AS builder
+#WORKDIR /app/web
+#COPY --from=packages /app/web/ .
 COPY . .
 
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN pnpm build:docker
+RUN ls -a
 
 
 # production stage
-FROM base AS production
+#FROM base AS production
 
 ENV NODE_ENV=production
 ENV EDITION=SELF_HOSTED
@@ -59,12 +62,13 @@ RUN ln -s /usr/share/zoneinfo/${TZ} /etc/localtime \
 
 
 WORKDIR /app/web
-COPY --from=builder /app/web/public ./public
+#COPY --from=builder /app/web/public ./public
 COPY --from=builder /app/web/.next/standalone ./
-COPY --from=builder /app/web/.next/static ./.next/static
+#COPY --from=builder /app/web/.next/static ./.next/static
 
 COPY docker/entrypoint.sh ./entrypoint.sh
 
+RUN ls -a
 
 # global runtime packages
 RUN pnpm add -g pm2 \
