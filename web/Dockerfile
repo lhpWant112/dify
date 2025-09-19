@@ -63,7 +63,7 @@ RUN ln -s /usr/share/zoneinfo/${TZ} /etc/localtime \
 
 WORKDIR /app/web
 #COPY --from=builder /app/web/public ./public
-COPY  /app/web/.next/standalone ./
+#COPY  /app/web/.next/standalone ./
 #COPY --from=builder /app/web/.next/static ./.next/static
 
 COPY docker/entrypoint.sh ./entrypoint.sh
