@@ -70,7 +70,6 @@ WORKDIR /app/web
 COPY docker/entrypoint.sh ./entrypoint.sh
 
 RUN ls -a /app/web/.next/standalone
-COPY  /app/web/.next/standalone ./
 
 # global runtime packages
 RUN pnpm add -g pm2 \
