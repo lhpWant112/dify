@@ -35,6 +35,7 @@ RUN ls -a
 #WORKDIR /app/web
 #COPY --from=packages /app/web/ .
 COPY . .
+RUN ls -a
 
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN pnpm build:docker
@@ -68,7 +69,8 @@ WORKDIR /app/web
 
 COPY docker/entrypoint.sh ./entrypoint.sh
 
-RUN ls -a
+RUN ls -a /app/web/.next/standalone
+COPY  /app/web/.next/standalone ./
 
 # global runtime packages
 RUN pnpm add -g pm2 \
